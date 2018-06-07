@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>Search</h1>
+
+{% endblock %}
+
+{% block content %}
+  <form method="post">
+    <label for="formula_weights">formula_weights</label>
+    <input name="formula_weights" id="formula_weights" required>
+    <label for="value_range">value_range</label>
+    <input name="value_range" id="value_range" required>
+    <input type="submit" value="submit">
+  </form>
+  <!-- 注意这里是解析dict的items,字典只支持Key的遍历,，如果想对key，value，则可以使用items方法。  -->
+  {% if search_results%}
+  {% for key,sql_results in search_results.items() %}
+  <article class="post">
+    <div>
+      <ul>
+        <li>{{ key }}
+          <ul>
+            {% for a in sql_results %}
+            <li>{{ a['formula_weight'] }}|{{ a['molecular_formula'] }}|{{ a['description'] }}</li>
+            <!-- <li>molecular_formula: {{ a['molecular_formula'] }},id:{{ a['id'] }},formula_weight:{{ a['formula_weight'] }},description:{{ a['description'] }}</li> -->
+            <!-- <li>{{ a['molecular_formula'] }}</li>
+            <li>{{ a['id'] }}</li>
+            <li>{{ a['formula_weight'] }}</li>
+            <li>{{ a['description'] }}</li> -->
+            {% endfor %}
+          </ul>
+        </li>
+      </ul>
+    </div>
+  {% endfor %}
+  {% endif %}
+{% endblock %}
