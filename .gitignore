@@ -3,7 +3,7 @@
 .pytest_cache/
 
 readme/
-
+s
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
