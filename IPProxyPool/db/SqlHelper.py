@@ -9,7 +9,7 @@ from db.ISqlHelper import ISqlHelper
 
 '''
 sql操作的基类
-包括ip，端口，types类型(0高匿名，1透明)，protocol(0 http,1 https http),country(国家),area(省市),updatetime(更新时间)
+包括ip，端口，types类型(0: 高匿,1:匿名,2 透明;Transparent Anonymous Elite)，protocol(0: http, 1 https, 2 http/https),country(国家),area(省市),updatetime(更新时间)
  speed(连接速度)
 '''
 
@@ -22,8 +22,10 @@ class Proxy(BaseModel):
     id = Column(Integer, primary_key=True, autoincrement=True)
     ip = Column(VARCHAR(16), nullable=False)
     port = Column(Integer, nullable=False)
-    types = Column(Integer, nullable=False)
-    protocol = Column(Integer, nullable=False, default=0)
+    # types = Column(Integer, nullable=False)
+    types = Column(VARCHAR(100), nullable=False)
+    protocol = Column(VARCHAR(100), nullable=False)
+    # protocol = Column(Integer, nullable=False, default=0)
     country = Column(VARCHAR(100), nullable=False)
     area = Column(VARCHAR(100), nullable=False)
     updatetime = Column(DateTime(), default=datetime.datetime.utcnow)

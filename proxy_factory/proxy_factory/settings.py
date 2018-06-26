@@ -1,4 +1,4 @@
-REDIS_HOST = "0.0.0.0"
+REDIS_HOST = "127.0.0.1"
 REDIS_PORT = 6379
 
 # 质量不好的代理检查的时间间隔

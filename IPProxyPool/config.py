@@ -1,16 +1,14 @@
 # coding:utf-8
+import os
+import random
 '''
 定义规则 urls:url列表
          type：解析方式,取值 regular(正则表达式),xpath(xpath解析),module(自定义第三方模块解析)
          patten：可以是正则表达式,可以是xpath语句不过要和上面的相对应
 '''
-import os
-import random
 
-'''
-ip，端口，类型(0高匿名，1透明)，protocol(0 http,1 https),country(国家),area(省市),updatetime(更新时间)
- speed(连接速度)
-'''
+
+# ip，端口，类型(0高匿名，1透明)，protocol(0 http,1 https),country(国家),area(省市),updatetime(更新时间),speed(连接速度)
 parserList = [
     {
         'urls': ['http://www.66ip.cn/%s.html' % n for n in ['index'] + list(range(2, 12))],
@@ -119,25 +117,21 @@ CHINA_AREA = ['河北', '山东', '辽宁', '黑龙江', '吉林'
 QQWRY_PATH = os.path.dirname(__file__) + "/data/qqwry.dat"
 THREADNUM = 5
 API_PORT = 8000
-'''
-爬虫爬取和检测ip的设置条件
-不需要检测ip是否已经存在，因为会定时清理
-'''
-UPDATE_TIME = 30 * 60  # 每半个小时检测一次是否有代理ip失效
-MINNUM = 50  # 当有效的ip值小于一个时 需要启动爬虫进行爬取
+
+# 爬虫爬取和检测ip的设置条件
+# 不需要检测ip是否已经存在，因为会定时清理
+
+# 每半个小时检测一次是否有代理ip失效
+UPDATE_TIME = 30 * 60
+# 当有效的ip值小于一个时 需要启动爬虫进行爬取
+MINNUM = 50
 
 TIMEOUT = 5  # socket延时
-'''
-反爬虫的设置
-'''
-'''
-重试次数
-'''
+# 反爬虫的设置
+# 重试次数
 RETRY_TIME = 3
 
-'''
-USER_AGENTS 随机头信息
-'''
+# USER_AGENTS 随机头信息
 USER_AGENTS = [
     "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; AcooBrowser; .NET CLR 1.1.4322; .NET CLR 2.0.50727)",
     "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.0; Acoo Browser; SLCC1; .NET CLR 2.0.50727; Media Center PC 5.0; .NET CLR 3.0.04506)",
@@ -191,6 +185,8 @@ TEST_URL = 'http://ip.chinaz.com/getip.aspx'
 TEST_IP = 'http://httpbin.org/ip'
 TEST_HTTP_HEADER = 'http://httpbin.org/get'
 TEST_HTTPS_HEADER = 'https://httpbin.org/get'
+
+
 #CHECK_PROXY变量是为了用户自定义检测代理的函数
 #现在使用检测的网址是httpbin.org,但是即使ip通过了验证和检测
 #也只能说明通过此代理ip可以到达httpbin.org,但是不一定能到达用户爬取的网址

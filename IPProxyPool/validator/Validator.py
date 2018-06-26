@@ -90,7 +90,8 @@ def detect_proxy(selfip, proxy, queue2=None):
     port = proxy['port']
     proxies = {"http": "http://%s:%s" % (ip, port), "https": "http://%s:%s" % (ip, port)}
     protocol, types, speed = getattr(sys.modules[__name__],config.CHECK_PROXY['function'])(selfip, proxies)#checkProxy(selfip, proxies)
-    if protocol >= 0:
+    # if protocol >= 0:
+    if protocol != "unknown":
         proxy['protocol'] = protocol
         proxy['types'] = types
         proxy['speed'] = speed
@@ -107,32 +108,32 @@ def checkProxy(selfip, proxies):
     :param
     :return:
     '''
-    protocol = -1
-    types = -1
+    protocol = "unknown"
+    types = "unknown"
     speed = -1
     http, http_types, http_speed = _checkHttpProxy(selfip, proxies)
     https, https_types, https_speed = _checkHttpProxy(selfip, proxies, False)
     if http and https:
-        protocol = 2
+        protocol = "http/https"
         types = http_types
         speed = http_speed
     elif http:
         types = http_types
-        protocol = 0
+        protocol = "http"
         speed = http_speed
     elif https:
         types = https_types
-        protocol = 1
+        protocol = "https"
         speed = https_speed
     else:
-        types = -1
-        protocol = -1
+        types = "unknown"
+        protocol = "unknown"
         speed = -1
     return protocol, types, speed
 
-
+# types 类型检测
 def _checkHttpProxy(selfip, proxies, isHttp=True):
-    types = -1
+    types = "unknown"
     speed = -1
     if isHttp:
         test_url = config.TEST_HTTP_HEADER
@@ -148,11 +149,12 @@ def _checkHttpProxy(selfip, proxies, isHttp=True):
             ip = content['origin']
             proxy_connection = headers.get('Proxy-Connection', None)
             if ',' in ip:
-                types = 2
+                # types = 2
+                types = 'Transparent'
             elif proxy_connection:
-                types = 1
+                types = 'Anonymous'
             else:
-                types = 0
+                types = 'Elite'
 
             return True, types, speed
         else:
@@ -167,8 +169,8 @@ def baidu_check(selfip, proxies):
     :param
     :return:
     '''
-    protocol = -1
-    types = -1
+    protocol = "unknown"
+    types = "unknown"
     speed = -1
     # try:
     #     #http://ip.chinaz.com/getip.aspx挺稳定，可以用来检测ip
@@ -190,17 +192,17 @@ def baidu_check(selfip, proxies):
         r.encoding = chardet.detect(r.content)['encoding']
         if r.ok:
             speed = round(time.time() - start, 2)
-            protocol= 0
-            types=0
+            protocol = "http"
+            types = "Elite"
 
         else:
             speed = -1
-            protocol= -1
-            types=-1
+            protocol = "unknown"
+            types = "unknown"
     except Exception as e:
             speed = -1
-            protocol = -1
-            types = -1
+            protocol = "unknown"
+            types = "unknown"
     return protocol, types, speed
 
 def getMyIP():

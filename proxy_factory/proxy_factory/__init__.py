@@ -14,9 +14,9 @@ from toolkit import load_function, load_module
 from toolkit.managers import Blocker, ExceptContext
 from toolkit.thread_safe_collections import ThreadSafeSet, TreadSafeDict
 
-from . import proxy_site_spider
-from .utils import exception_wrapper
-from . import settings
+import proxy_site_spider
+from utils import exception_wrapper
+import settings
 
 __version__ = "0.2.7"
 

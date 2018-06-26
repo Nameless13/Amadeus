@@ -2,29 +2,29 @@ import re
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 
-from .utils import parse_class, parse_port, get_html, download
+from utils import parse_class, parse_port, get_html, download
 
 
-def fetch_kxdaili(self, page=5):
-    """
-    从www.kxdaili.com抓取免费代理
-    """
-    proxies = set()
-    url_tmpl = "http://www.kxdaili.com/dailiip/1/%d.html"
-    for page_num in range(page):
-        url = url_tmpl % (page_num + 1)
-        soup = BeautifulSoup(get_html(url, self.headers), "html")
-        table_tag = soup.find("table", attrs={"class": "segment"})
-        trs = table_tag.tbody.find_all("tr")
-        for tr in trs:
-            tds = tr.find_all("td")
-            ip = tds[0].text
-            port = tds[1].text
-            latency = tds[4].text.split(" ")[0]
-            if float(latency) < 0.5:  # 输出延迟小于0.5秒的代理
-                proxy = "%s:%s" % (ip, port)
-                proxies.add(proxy)
-    return proxies
+# def fetch_kxdaili(self, page=5):
+#     """
+#     从www.kxdaili.com抓取免费代理
+#     """
+#     proxies = set()
+#     url_tmpl = "http://www.kxdaili.com/dailiip/1/%d.html"
+#     for page_num in range(page):
+#         url = url_tmpl % (page_num + 1)
+#         soup = BeautifulSoup(get_html(url, self.headers), "html")
+#         table_tag = soup.find("table", attrs={"class": "segment"})
+#         trs = table_tag.tbody.find_all("tr")
+#         for tr in trs:
+#             tds = tr.find_all("td")
+#             ip = tds[0].text
+#             port = tds[1].text
+#             latency = tds[4].text.split(" ")[0]
+#             if float(latency) < 0.5:  # 输出延迟小于0.5秒的代理
+#                 proxy = "%s:%s" % (ip, port)
+#                 proxies.add(proxy)
+#     return proxies
 
 
 def fetch_mimvp(self):

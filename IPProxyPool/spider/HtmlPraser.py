@@ -55,8 +55,8 @@ class Html_Parser(object):
             try:
                 ip = proxy.xpath(parser['position']['ip'])[0].text
                 port = proxy.xpath(parser['position']['port'])[0].text
-                type = 0
-                protocol = 0
+                type = text_('Transparent')
+                protocol = text_("http")
                 addr = self.ips.getIpAddr(self.ips.str2ip(ip))
                 country = text_('')
                 area = text_('')
@@ -72,7 +72,7 @@ class Html_Parser(object):
             # ip，端口，类型(0高匿名，1透明)，protocol(0 http,1 https http),country(国家),area(省市),updatetime(更新时间)
 
             # proxy ={'ip':ip,'port':int(port),'type':int(type),'protocol':int(protocol),'country':country,'area':area,'updatetime':updatetime,'speed':100}
-            proxy = {'ip': ip, 'port': int(port), 'types': int(type), 'protocol': int(protocol), 'country': country,
+            proxy = {'ip': ip, 'port': int(port), 'types': type, 'protocol': protocol, 'country': country,
                      'area': area, 'speed': 100}
             proxylist.append(proxy)
         return proxylist
@@ -93,7 +93,7 @@ class Html_Parser(object):
                     ip = match[parser['position']['ip']]
                     port = match[parser['position']['port']]
                     # 网站的类型一直不靠谱所以还是默认，之后会检测
-                    type = 0
+                    type = text_('Transparent')
                     # if parser['postion']['protocol'] > 0:
                     # protocol = match[parser['postion']['protocol']]
                     # if protocol.lower().find('https')!=-1:
@@ -101,7 +101,7 @@ class Html_Parser(object):
                     #     else:
                     #         protocol = 0
                     # else:
-                    protocol = 0
+                    protocol = text_("http")
                     addr = self.ips.getIpAddr(self.ips.str2ip(ip))
                     country = text_('')
                     area = text_('')
@@ -147,8 +147,8 @@ class Html_Parser(object):
                     ip_port = base64.b64decode(match.replace("Proxy('", "").replace("')", ""))
                     ip = ip_port.split(':')[0]
                     port = ip_port.split(':')[1]
-                    type = 0
-                    protocol = 0
+                    type = text_('Transparent')
+                    protocol = text_("http")
                     addr = self.ips.getIpAddr(self.ips.str2ip(ip))
                     country = text_('')
                     area = text_('')

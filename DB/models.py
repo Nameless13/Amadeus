@@ -54,3 +54,17 @@ class Proxy(Base):
     updatetime = Column(DateTime(), default=datetime.utcnow)
     speed = Column(Numeric(5, 2), nullable=False)
     score = Column(Integer, nullable=False, default=10)
+
+class Proxy_Aboard(Base):
+    __tablename__ = 'proxy_abroad'
+    __table_args__ = {"useexisting": True}
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    ip = Column(VARCHAR(16), nullable=False)
+    port = Column(Integer, nullable=False)
+    types = Column(Integer, nullable=False)
+    protocol = Column(Integer, nullable=False, default=0)
+    country = Column(VARCHAR(100), nullable=False)
+    area = Column(VARCHAR(100), nullable=False)
+    updatetime = Column(DateTime(), default=datetime.utcnow)
+    speed = Column(Numeric(5, 2), nullable=False)
+    score = Column(Integer, nullable=False, default=10)
