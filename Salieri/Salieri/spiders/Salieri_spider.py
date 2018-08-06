@@ -9,6 +9,7 @@ class SalieriSpiderSpider(scrapy.Spider):
     allowed_domains = ['metlin.scripps.edu']
     # 入口URL，扔到调度器里面去
     start_urls = ['https://metlin.scripps.edu/metabo_info.php?molid=1']
+    # start_urls = ['https://metlin.scripps.edu/metabo_info.php?molid=5000']
     # start_urls = ['http://metlin.scripps.edu/']
 
     def parse(self, response):
@@ -60,3 +61,9 @@ class SalieriSpiderSpider(scrapy.Spider):
         print(get_list)
         # 将数据yield到pipline
         yield metlin_item
+
+"""
+Spectrum的XPATN截取: //script[@type="text/javascript"]/text()
+https://metlin.scripps.edu/showChart.php?molid=5000&h=240&collE=20&Imode=p&etype=insilico
+
+"""
